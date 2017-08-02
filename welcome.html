@@ -1,0 +1,82 @@
+<h1 style="text-align: center;"> Welcome to the home page </h1>
+
+<div style="margin-left: 10px;" ng-show="addButton">
+	<input type="button" value="Add Student" ng-click="AddStudent()" class="btn btn-primary" >
+</div><br />
+<div style="margin-left: 10px;" ng-show="monitorDetails">
+    <input type="button" value="Select Class" ng-click="showStudent()" class="btn btn-primary">
+</div>
+
+<div ng-show="addStudent" id="addForm">
+    <form name="form" ng-submit="InsertStudent()">
+       	<div class="form-group">
+            <label class="control-label">CLASS:</label>
+            <select name="class" ng-model="classSelect" class="form-control" ng-change="pullCourse()">
+                	<option name="class 1">class 1</option>
+                	<option name="class 2">class 2</option>
+                	<option name="class 3">class 3</option>
+            </select>
+        </div>
+        <div ng-show="studentInfo">
+            <div class="form-group">
+                <label class="control-label">USER NAME:</label>
+                <input type="text" name="userName" ng-model="userName" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">PASSWORD:</label>
+                <input type="text" name="pwd" ng-model="pwd" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">FIRST NAME:</label>
+                <input type="text" name="firstname" ng-model="firstname" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">LAST NAME:</label>
+                <input type="text" name="lastname" ng-model="lastname" class="form-control">
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">COURSE NAME: {{list[0].coursename | uppercase}}</label>
+                <input type="text" name="course1" ng-model="course1" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="control-label">COURSE NAME: {{list[1].coursename | uppercase}}</label>
+                <input type="text" name="course2" ng-model="course2" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="control-label">COURSE NAME: {{list[2].coursename | uppercase}}</label>
+                <input type="text" name="course3" ng-model="course3" class="form-control">
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+    </form>
+</div>
+
+<div ng-show="details" id="detail">
+    <form>
+        <div class="form-group" class="dropdown">
+            <label class="control-label">CLASS:</label>
+            <select name="class" ng-model="classSelection" class="form-control" ng-change="pullStudent()" class="dropdown-toggle" data-toggle="dropdown">
+                    <option name="class 1">class 1</option>
+                    <option name="class 2">class 2</option>
+                    <option name="class 3">class 3</option>
+            </select>
+        </div>
+        <div class="form-group" ng-show="studentnames">
+            <label class="control-label">STUDENT:</label>
+            <select class="form-control" ng-model='studentselect' ng-change='pullDetails()' ng-options='student.student_id as student.student_name for student in studentlist'>
+                <option>{{student.student_name}}</option>
+            </select>
+        </div>
+        <div class="form-group" ng-show='marksInfo'>
+            <label class="control-label">{{info[0].coursename | uppercase}} :{{info[0].marks}}</label><br />
+            <label class="control-label">{{info[1].coursename | uppercase}} :{{info[1].marks}}</label><br />
+            <label class="control-label">{{info[2].coursename | uppercase}} :{{info[2].marks}}</label><br />
+        </div>
+    </form>
+</div>

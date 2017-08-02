@@ -1,0 +1,127 @@
+Database Design:
+
+1. student details:
+		student_id,username, password, firstname, lastname, delete_status, status
+
+2. course
+		course_id, coursename, delete_status
+
+3. class
+		class_id, classname, delete_status
+
+4. student_course
+		student_id, course_id, student_course_id, marks, class_id, delete_status
+
+5. student_class
+		student_class_id, student_id, class_id, delete_status
+
+
+ $stmt='INSERT INTO student(username, password, firstname, lastname) values ('$userName', '$pass', '$firstname', '$lastname')'; 
+$stmt2 = 'INSERT INTO student_class(student_id, class_id, delete_status) values (LAST_INSERT_ID(), ?,'0')';
+
+query:
+    SELECT s.firstname, s.lastname, s.student_id, sc.class_id, sc.course_id, sc.marks
+    FROM student as s INNER JOIN student_course sc on (s.student_id=sc.student_id)
+    WHERE class_id=1
+
+select s.student_id, concat(s.firstname,' ',s.lastname) as student_name
+from 
+student_class sc 
+inner join students s on (sc.student_id = s.student_id)
+where
+sc.class_id = 5
+
+Students
+-----------
+student_id
+firstname
+lastname
+username
+password
+delete_status
+status
+
+courses
+-----------
+course_id
+course_name
+delete_status
+
+class
+-------
+class_id
+class_name
+delete_status
+
+student_class
+--------------
+student_class_id
+student_id                        
+class_id
+delete_status
+
+student_subject
+-----------------
+student_subject_id
+student_id
+class_id
+subject_id
+marks
+delete_status
+
+class_course
+--------------
+class_course_id
+class_id
+course_id
+delete_status
+
+marks_insert_query:
+
+$statement="INSERT INTO student(username, password, firstname, lastname, delete_status, status) VALUES ('$username', '$password', '$firstname', '$lastname','0','0')";
+$res = $dbc->query($statement);
+$row1 = $res->fetch_object();
+$student_number = $row->student_id
+
+$statement2= "INSERT INTO student_class (student_id, class_id, delete_status) VALUES(LAST_INSERT_ID(),(SELECT class_id FROM class WHERE classname = '$classname'), '0')";
+
+--------------------------------------------------------------------------------------------------------
+INSERT INTO student_course(student_id, class_id, course_id,marks,delete_status) VALUES(LAST_INSERT_ID(),(SELECT class_id FROM class WHERE classname = '$classname'),$clear,$classname,'0')
+
+
+$sql = 'select c.course_id from course c, class_course cc, class s where c.course_id= cc.course_id and s.class_id=cc.class_id and s.classname="class 1"';
+
+$result = $dbc->query($sql);
+$row = $result->fetch_object(); //get the first row from the result
+$course_number = $row->course_id;
+
+$sql1 ="INSERT INTO student_course(student_id, class_id, course_id,marks,delete_status) VALUES($student_number,(SELECT class_id FROM class WHERE classname = '$classname'),$clear,$classname,$course1,'0')
+
+$result1 = $dbc->query($sql1);
+
+
+------------------------------------------------------------------------------------------------------------------------
+select c.coursename from course c, class_course cc, class s where c.course_id= cc.course_id and s.class_id=cc.class_id and s.classname="class 1";
+
+select s.student_id, concat(s.firstname,' ',s.lastname) as student_name
+from 
+student_class sc 
+inner join students s on (sc.student_id = s.student_id)
+where
+sc.class_id = 5
+
+--------------------------------------------------------------------------------------------------------------------------
+select s.student_id, concat(s.firstname,' ',s.lastname) as student_name from student_class sc, student s, class c where sc.class_id = c.class_id and s.student_id= sc.student_id and c.classname="class 2"
+--------------------------------------------------------------------------------------------------------------------------------
+
+select sc.marks, sc.course_id, c.coursename, from student_course as sc, student as s, course as c  where sc.course_id=c.course_id and sc.student_id=s.student_id and sc.student_id="101";
+
+select AVG(marks) from student_course where student_id="101"
+--------------------------------------------------------------------------------------------------------------------------
+
+select sc.*, GROUP_CONCAT(sc.course_id), GROUP_CONCAT(sc.marks), AVG(sc.marks) as average 
+from
+student_course sc 
+where 
+sc.student_id = 101;
+-----------------------------------------------------------------------------------------------------------------------------
